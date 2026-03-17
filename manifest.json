@@ -5,7 +5,8 @@
     "description": "Remove distractions and enable focus mode on YouTube",
     "permissions": [
         "scripting",
-        "activeTab"
+        "activeTab",
+        "storage"
     ],
     "host_permissions": [
         "https://www.youtube.com/*"
