@@ -15,15 +15,5 @@ function setToggle() {
     });
 }
 
-function getToggleStates() {
-    var toggleLists = [1,2,3,4];
-    var states = {};
-    toggleLists.forEach(id => {
-        chrome.storage.local.get(["toggle"+id], (result) => {
-            states["toggle"+id] = result["toggle"+id] || false;
-        });
-    });
-    return states;
-}
 
 document.addEventListener("DOMContentLoaded", setToggle);

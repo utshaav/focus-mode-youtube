@@ -43,6 +43,8 @@ function hide() {
                         break;
                     case "toggle3":
                         final_string += `${sidebarRecommendations}, `;
+                        // Simulate "t" key press to open video in theater mode 
+                        document.querySelector('button[aria-keyshortcuts="t"]').click(); 
                         break;
                     case "toggle4":
                         final_string += `${commentsSection}, `;
