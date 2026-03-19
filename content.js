@@ -27,6 +27,7 @@ async function getToggleStates() {
 
 // Function to hide all Shorts (ytd-rich-shelf-renderer)
 async function hide() {
+    debugger;
     const data = await getToggleStates();
 
     let final_string = "";
@@ -45,8 +46,8 @@ async function hide() {
                 case "toggle3":
                     final_string += `${sidebarRecommendations}, `;
 
-                    const theaterBtn = document.querySelector('data-title-no-tooltip="Theater mode"]');
-                    if (theaterBtn) theaterBtn.click();
+                    const theaterBtn = document.querySelector('button[data-priority="9"]');
+                    if (theaterBtn && !theaterBtn.getAttribute('data-title-no-tooltip').includes('Default')) theaterBtn.click();
 
                     break;
 
@@ -78,13 +79,20 @@ async function hide() {
 //     hideShorts();
 // });
 // Button Toogle functionality
-
+isRunning = false;
+interval = 5000;
 // Observe dynamic changes on the page
 const observer = new MutationObserver(mutations => {
-    mutations.forEach(() => {
-        hide(); // Hide any new Shorts that appear
-    });
+    if (isRunning) return;
+
+    isRunning = true;
+    hide();
+    setTimeout(() => {
+        isRunning = false;
+    }, interval);
 });
 
 // Start observing the body for added nodes
 observer.observe(document.body, { childList: true, subtree: true });
+
+hide(); // Initial call to hide elements on page load

@@ -6,7 +6,8 @@
     "permissions": [
         "scripting",
         "activeTab",
-        "storage"
+        "storage",
+        "debugger"
     ],
     "host_permissions": [
         "https://www.youtube.com/*"
