@@ -95,6 +95,6 @@ const observer = new MutationObserver(mutations => {
 // Start observing the body for added nodes
 observer.observe(document.body, { childList: true, subtree: true });
 
-window.onload = () => {
+document.onload = () => {
     hide(); // Initial call to hide elements on page load
 };
