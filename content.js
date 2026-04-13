@@ -73,28 +73,49 @@ async function hide() {
     }
 }
 
-// Click handler for the button
-// button.addEventListener("click", () => {
-//     console.log("Focus button clicked!");
-//     hideShorts();
-// });
-// Button Toogle functionality
-isRunning = false;
-interval = 5000;
-// Observe dynamic changes on the page
-const observer = new MutationObserver(mutations => {
-    if (isRunning) return;
+// // Click handler for the button
+// // button.addEventListener("click", () => {
+// //     console.log("Focus button clicked!");
+// //     hideShorts();
+// // });
+// // Button Toogle functionality
+// isRunning = false;
+// interval = 5000;
+// // Observe dynamic changes on the page
+// const observer = new MutationObserver(mutations => {
+//     if (isRunning) return;
 
-    isRunning = true;
-    hide();
-    setTimeout(() => {
-        isRunning = false;
-    }, interval);
+//     isRunning = true;
+//     hide();
+//     setTimeout(() => {
+//         isRunning = false;
+//     }, interval);
+// });
+
+const throttledHide = throttle(hide, 2000); // runs at most every 2s
+const observer = new MutationObserver(() => {
+    throttledHide();
 });
 
 // Start observing the body for added nodes
 observer.observe(document.body, { childList: true, subtree: true });
 
-document.onload = () => {
+window.onload = () => {
     hide(); // Initial call to hide elements on page load
 };
+
+
+// throttle function to limit the rate of hide() calls
+
+function throttle(func, limit) {
+    let lastCall = 0;
+
+    return function (...args) {
+        const now = Date.now();
+
+        if (now - lastCall >= limit) {
+            lastCall = now;
+            func.apply(this, args);
+        }
+    };
+}
