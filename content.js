@@ -109,6 +109,8 @@ window.onload = () => {
 
 function throttle(func, limit) {
     let lastCall = 0;
+    let timeout = null;
+    let lastArgs = null;
 
     return function (...args) {
         const now = Date.now();
@@ -116,6 +118,18 @@ function throttle(func, limit) {
         if (now - lastCall >= limit) {
             lastCall = now;
             func.apply(this, args);
+        }else{
+            lastArgs = args;
+            if (!timeout) {
+                const remaining = limit - (now - lastCall);
+
+                timeout = setTimeout(() => {
+                    lastCall = Date.now();
+                    func.apply(this, lastArgs);
+                    timeout = null;
+                    lastArgs = null;
+                }, remaining);
+            }
         }
     };
 }
